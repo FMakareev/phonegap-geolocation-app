@@ -12,7 +12,6 @@ function onDeviceReady() {
 // onSuccess Geolocation
 //
 function onSuccess(position) {
-    alert(position);
     var element = document.getElementById('geolocation');
     var log = document.getElementById('log');
     log.innerHTML = JSON.stringify(position);

@@ -4,8 +4,8 @@ const Task_Config = {
             'isRepository': 'true',  // Presence of a copy in the repository
             'appId': '2705308', // appID сan be obtained after the application is initialized build.phonegap.com
             'user': { // login and password build.phonegap.com
-                'email': 'fmakareev@gmail.com',
-                'password': '19980911Fender'
+                'email': '',
+                'password': ''
             },
             'platforms': [ // List of required platforms
                 'android'
