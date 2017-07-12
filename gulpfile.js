@@ -63,7 +63,7 @@ gulp.task('add', function() {
         .pipe(git.commit('initial commit'))
         .pipe(push({
             repository: 'origin',
-            refspec: 'HEAD'
+            refspec: 'master'
         }))
 });
 gulp.task('git:commit', function(){
