@@ -11,6 +11,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-git-push": "^1.0.1",
+    "gulp-gitignore": "^0.1.0",
     "gulp-phonegap-build": "^0.1.5"
   },
   "dependencies": {
