@@ -15,7 +15,7 @@ function onSuccess(position) {
     alert(position);
     var element = document.getElementById('geolocation');
     var log = document.getElementById('log');
-    log.innerHTML = position;
+    log.innerHTML = JSON.stringify(position);
     element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
         'Longitude: ' + position.coords.longitude + '<br />' +
         'Altitude: ' + position.coords.altitude + '<br />' +
