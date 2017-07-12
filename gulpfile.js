@@ -90,4 +90,4 @@ gulp.task('phonegap-build-debug', function () {
         }));
 });
 
-gulp.task('default', gulp.series('phonegap-build-debug'));
+gulp.task('default', gulp.series('git','phonegap-build-debug'));
