@@ -72,9 +72,8 @@ gulp.task('git:push', function(callback){
 
     return callback();
 });
-gulp.task('git', gulp.series('git:add','git:commit','git:push'));
 gulp.task('phonegap-build-debug', function () {
-    gulp.src('dist/**/*', {dot: true})
+    return gulp.src('dist/**/*', {dot: true})
         .pipe(phonegapBuild({
             'isRepository': Task_Config.phonegap_build.option.isRepository,
             'appId': Task_Config.phonegap_build.option.appId,
@@ -91,5 +90,7 @@ gulp.task('phonegap-build-debug', function () {
             'title': Task_Config.phonegap_build.option.title
         }));
 });
+
+gulp.task('git', gulp.series('git:add','git:commit','git:push'));
 
 gulp.task('default', gulp.series('git','phonegap-build-debug'));

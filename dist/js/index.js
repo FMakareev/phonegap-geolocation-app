@@ -5,13 +5,14 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // device APIs are available
 //
 function onDeviceReady() {
-
+    alert("START");
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
 }
 
 // onSuccess Geolocation
 //
 function onSuccess(position) {
-    alert(position)
+    alert(position);
     var element = document.getElementById('geolocation');
     var log = document.getElementById('log');
     log.innerHTML = position;
