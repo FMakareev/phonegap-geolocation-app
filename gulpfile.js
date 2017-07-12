@@ -1,20 +1,23 @@
 const Task_Config = {
-    'phonegap_build' : {
-        'option' : {
-            'isRepository': 'true',  // Налие копиии в репозитории
-            'appId': '2705250', // appID можно получить после инициальзации приложения на build.phonegap.com
+    'phonegap_build': {
+        'option': {
+            'isRepository': 'true',  // Presence of a copy in the repository
+            'appId': '2705308', // appID сan be obtained after the application is initialized build.phonegap.com
             'user': { // login and password build.phonegap.com
-                'email': '',
-                'password': ''
+                'email': 'fmakareev@gmail.com',
+                'password': '19980911Fender'
             },
-            'platforms': [ // список необходимых платформ
+            'platforms': [ // List of required platforms
                 'android'
             ],
-            'download': { // директория куда будет загружено приложение
-                'android': 'dist/'
-            }
+            'download': { // The directory where the application will be downloaded
+                'android': 'build/android.apk'
+            },
+            'hydrates': true,
+            'private': false,
+            'title': 'TestApp'
         },
-        'keys': { // список паролей для ключей приложений
+        'keys': { // List of passwords for application keys
             'ios': {
                 "password": "foobar"
             },
@@ -35,17 +38,24 @@ var phonegapBuild = require('gulp-phonegap-build');
 gulp.task('phonegap-build', function () {
     gulp.src('dist/**/*', {dot: true})
         .pipe(phonegapBuild({
-            'isRepository': 'true',
-            'appId': '2705250',
+            'isRepository': Task_Config.phonegap_build.option.isRepository,
+            'appId': Task_Config.phonegap_build.option.appId,
             'user': {
-                'email': 'fmakareev@gmail.com',
-                'password': '19980911Fender'
-            }
+                'email': Task_Config.phonegap_build.option.user.email,
+                'password': Task_Config.phonegap_build.option.user.password
+            },
+            'platforms': Task_Config.phonegap_build.option.platforms,
+            'download': {
+                'android': Task_Config.phonegap_build.option.download.android
+            },
+            'hydrates': false,
+            'private': Task_Config.phonegap_build.option.private,
+            'title': Task_Config.phonegap_build.option.title
         }));
 });
 
 gulp.task('phonegap-build-debug', function () {
-    gulp.src('./**/*', {dot: true})
+    gulp.src('dist/**/*', {dot: true})
         .pipe(phonegapBuild({
             'isRepository': Task_Config.phonegap_build.option.isRepository,
             'appId': Task_Config.phonegap_build.option.appId,
@@ -56,7 +66,10 @@ gulp.task('phonegap-build-debug', function () {
             'platforms': Task_Config.phonegap_build.option.platforms,
             'download': {
                 'android': Task_Config.phonegap_build.option.download.android
-            }
+            },
+            'hydrates': Task_Config.phonegap_build.option.hydrates,
+            'private': Task_Config.phonegap_build.option.private,
+            'title': Task_Config.phonegap_build.option.title
         }));
 });
 
