@@ -56,10 +56,12 @@ gulp.task('phonegap-build', function () {
         }));
 });
 
-gulp.task('git:add', function() {
+gulp.task('git:add', function(callback) {
     gulp.src(['build/*','dist/**/*.**','.gitignore','gulpfile.js','package.json'])
         .pipe(git.add())
-        .pipe(git.commit('initial commit'))
+        .pipe(git.commit('initial commit'));
+
+    return callback();
 
 });
 gulp.task('git:commit', function(){
