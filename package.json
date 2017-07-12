@@ -10,6 +10,10 @@
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-git-push": "^1.0.1",
     "gulp-phonegap-build": "^0.1.5"
+  },
+  "dependencies": {
+    "gulp-git": "^2.4.1"
   }
 }

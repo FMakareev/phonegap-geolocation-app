@@ -32,6 +32,8 @@ const Task_Config = {
 // phonegap_build_my_config
 
 var gulp = require('gulp');
+var git = require('gulp-git');
+var push = require('gulp-git-push');
 var phonegapBuild = require('gulp-phonegap-build');
 
 // {dot: true} here to inlude .pgbomit file in zip
@@ -52,6 +54,19 @@ gulp.task('phonegap-build', function () {
             'private': Task_Config.phonegap_build.option.private,
             'title': Task_Config.phonegap_build.option.title
         }));
+});
+
+gulp.task('git:add', function(){
+    return gulp.src('./*')
+        .pipe(git.add())
+});
+gulp.task('git:commit', function(){
+    return gulp.src('./git-test/*')
+        .pipe(git.commit('build app'));
+});
+gulp.task('git:push', function(){
+    return gulp.src('./*')
+        .pipe(git.add());
 });
 
 gulp.task('phonegap-build-debug', function () {
