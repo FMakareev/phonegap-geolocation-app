@@ -33,9 +33,8 @@ const Task_Config = {
 
 var gulp = require('gulp');
 var git = require('gulp-git');
-var push = require('gulp-git-push');
 var phonegapBuild = require('gulp-phonegap-build');
-var gitignore = require('gulp-gitignore');
+
 
 // {dot: true} here to inlude .pgbomit file in zip
 gulp.task('phonegap-build', function () {
@@ -57,23 +56,21 @@ gulp.task('phonegap-build', function () {
         }));
 });
 
-gulp.task('add', function() {
+gulp.task('git:add', function() {
     gulp.src(['build/*','dist/**/*.**','.gitignore','gulpfile.js','package.json'])
         .pipe(git.add())
         .pipe(git.commit('initial commit'))
-        .pipe(push({
-            repository: 'origin',
-            refspec: 'master'
-        }))
+
 });
 gulp.task('git:commit', function(){
     return gulp.src('./git-test/*')
 });
 gulp.task('git:push', function(){
-    return gulp.src('./*')
-
+    git.push('origin', 'master', function (err) {
+        if (err) throw err;
+    });
 });
-
+gulp.task('git', gulp.series('git:add','git:commit','git:push'));
 gulp.task('phonegap-build-debug', function () {
     gulp.src('dist/**/*', {dot: true})
         .pipe(phonegapBuild({
@@ -93,4 +90,4 @@ gulp.task('phonegap-build-debug', function () {
         }));
 });
 
-gulp.task('default', ['phonegap-build-debug']);
+gulp.task('default', gulp.series('phonegap-build-debug'));
