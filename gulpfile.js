@@ -4,8 +4,8 @@ const Task_Config = {
             'isRepository': 'true',  // Налие копиии в репозитории
             'appId': '2705250', // appID можно получить после инициальзации приложения на build.phonegap.com
             'user': { // login and password build.phonegap.com
-                'email': 'fmakareev@gmail.com',
-                'password': '19980911Fender'
+                'email': '',
+                'password': ''
             },
             'platforms': [ // список необходимых платформ
                 'android'
@@ -26,8 +26,6 @@ const Task_Config = {
     }
 };
 
-const test = require('phonegap_build_my_config');
-console.log(test.phonegap_build.option);
 // phonegap_build_my_config
 
 var gulp = require('gulp');
