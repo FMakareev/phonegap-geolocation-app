@@ -2,6 +2,7 @@
 $(document).on("deviceready", getLocation);
 
 function getLocation() {
+    alert('GETLOCATION');
     cordova.plugins.locationAccuracy.canRequest(function(canRequest){
         if(canRequest){
             alert(canRequest + ' if');
