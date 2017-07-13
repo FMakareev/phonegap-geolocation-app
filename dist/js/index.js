@@ -1,84 +1,28 @@
-function onDeviceReady() {
 
-    // Bind events
-    $(document).on("resume", onResume);
+$(document).on("deviceready", getLocation);
 
-    $('#location-settings').on("click", function(){
-        cordova.plugins.diagnostic.switchToLocationSettings();
-    });
-
-
-    function onRequestSuccess(accuracyName, success){
-        handleSuccess("Successfully requested accuracy '"+accuracyName+"': "+success.message);
-    }
-
-    function onRequestFailure(error){
-        onError("Accuracy request failed: error code="+error.code+"; error message="+error.message);
-    }
-
-    $('#request-accuracy').on("click", function(){
-        var accuracy = $('#location-accuracy').val(),
-            accuracyName  =  $('#location-accuracy option:selected').text();
-        cordova.plugins.locationAccuracy.request(onRequestSuccess.bind(this, accuracyName), onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-    });
-
-    $('#request-authorization').on("click", function () {
-
-        cordova.plugins.diagnostic.isLocationAuthorized(function (authorized) {
-            if(!authorized){
-                cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
-                    handleSuccess("Requested location authorization: authorization was " + status);
-                }, onError, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
-            }else{
-                onError("App is already authorized to use location");
-            }
-        }, onError);
-    });
-
-    checkState();
-}
-
-
-function checkState(){
-    console.log("Checking location state...");
-
+function getLocation() {
     cordova.plugins.locationAccuracy.canRequest(function(canRequest){
         if(canRequest){
-            $('#request-accuracy').removeAttr('disabled');
-        }else{
-            $('#request-accuracy').attr('disabled', 'disabled');
+            alert(canRequest + ' if');
+            cordova.plugins.locationAccuracy.request(function(){
+                alert("Request successful");
+                }, function (error){
+                alert("Request failed");
+                    if(error){
+                        // Android only
+                        alert("error code="+error.code+"; error message="+error.message);
+                        if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+                            if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+                                cordova.plugins.diagnostic.switchToLocationSettings();
+                            }
+                        }
+                    }
+                }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY // iOS will ignore this
+            );
+        } else {
+            alert(canRequest + ' else');
         }
     });
-
-    cordova.plugins.diagnostic.isLocationAuthorized(function (authorized) {
-        if(authorized){
-            $('#request-authorization').attr('disabled', 'disabled');
-        }else{
-            $('#request-authorization').removeAttr('disabled');
-        }
-    }, onError);
-
-    function evaluateMode(mode){
-        $('#location-mode').text(mode.toUpperCase());
-    }
-    cordova.plugins.diagnostic.getLocationMode(evaluateMode, onError);
 }
 
-function onError(error) {
-    var msg = "An error occurred: " + error;
-    console.error(msg);
-    alert(msg);
-    checkState();
-}
-
-function handleSuccess(msg){
-    console.log(msg);
-    alert(msg);
-    checkState();
-}
-
-function onResume(){
-    checkState();
-}
-
-$(document).on("deviceready", onDeviceReady);
