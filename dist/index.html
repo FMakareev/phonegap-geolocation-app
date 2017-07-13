@@ -28,26 +28,50 @@
 <meta name="viewport"
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
 <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *"/>
-
-<link rel="stylesheet" type="text/css" href="css/index.css" />
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 <title>Hello World</title>
+
+<style type="text/css">
+    body{
+        padding: 0;
+        margin: 0;
+    }
+    h2{
+        text-align: center;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    #location-settings{
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 
 <body>
 
 
+<h2>cordova-plugin-request-location-accuracy demo</h2>
+
+<p>Current Location Mode: <span id="location-mode"></span></p>
+
+<div><button id="location-settings">Open Location settings</button></div>
+
+<div><button id="request-authorization">Request Location Authorization</button></div>
+
 <div>
-    <div id="error">
-        место для ошибка
-    </div>
-    <div id="geolocation">
-        а сюда координаты
-    </div>
-    <button id="getGeolocation">Запросить местоположение</button>
+    <select id="location-accuracy">
+        <option value="3">High Accuracy</option>
+        <option value="2">Balanced Power</option>
+        <option value="1">Lower Power</option>
+        <option value="0">No Power</option>
+    </select>
+    <button id="request-accuracy">Request Location Accuracy</button>
 </div>
 
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+
 </body>
 
 </html>
