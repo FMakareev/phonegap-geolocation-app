@@ -4,15 +4,18 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ngulp": "npm run gulp"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-changed": "^3.1.0",
+    "gulp-file-include": "^1.1.0",
     "gulp-git": "^2.4.1",
-    "gulp-phonegap-build": "^0.1.5"
+    "gulp-if-else": "^1.0.3",
+    "gulp-phonegap-build": "^0.1.5",
+    "gulp-sass": "^3.1.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

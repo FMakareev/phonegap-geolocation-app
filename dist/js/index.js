@@ -13,8 +13,6 @@ function onDeviceReady() {
 //
 function onSuccess(position) {
     var element = document.getElementById('geolocation');
-    var log = document.getElementById('log');
-    log.innerHTML = JSON.stringify(position);
     element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
         'Longitude: ' + position.coords.longitude + '<br />' +
         'Altitude: ' + position.coords.altitude + '<br />' +
@@ -37,6 +35,25 @@ function onError(error) {
 function getLoc() {
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 }
-var btn = document.getElementById('btn-loc');
+var btn = document.getElementById('getGeolocation');
 
-btn.addEventListener('onclick', getLoc);
+btn.addEventListener('onclick', locationAccuracy);
+
+function locationAccuracy() {
+    cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+        if (canRequest) {
+            cordova.plugins.locationAccuracy.request(function (success) {
+                console.log("Successfully requested accuracy: " + success.message);
+                getLoc()
+            }, function (error) {
+                console.error("Accuracy request failed: error code=" + error.code + "; error message=" + error.message);
+                if (error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED) {
+                    if (window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")) {
+                        cordova.plugins.diagnostic.switchToLocationSettings();
+                    }
+                }
+            }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+        }
+    });
+
+}

@@ -1,96 +1,180 @@
-const Task_Config = {
-    'phonegap_build': {
-        'option': {
-            'isRepository': 'true',  // Presence of a copy in the repository
-            'appId': '2705308', // appID сan be obtained after the application is initialized build.phonegap.com
-            'user': { // login and password build.phonegap.com
-                'email': '',
-                'password': ''
-            },
-            'platforms': [ // List of required platforms
-                'android'
-            ],
-            'download': { // The directory where the application will be downloaded
-                'android': 'build/android.apk'
-            },
-            'hydrates': true,
-            'private': false,
-            'title': 'TestApp'
-        },
-        'keys': { // List of passwords for application keys
-            'ios': {
-                "password": "foobar"
-            },
-            'android': {
-                "key_pw": "foobar",
-                "keystore_pw": "foobar"
-            }
-        }
-    }
-};
+var gulp            = require('gulp'),
+    ifElse          = require('gulp-if-else'),
+    git             = require('gulp-git'),
+    config          = require('./global-config.json'),
+    fileinclude     = require('gulp-file-include'),
+    phonegapBuild   = require('gulp-phonegap-build'),
+    changed         = require('gulp-changed');
+    sass            = require('gulp-sass');
 
-// phonegap_build_my_config
+//
+//
+// CSS BUILD
+//
+//
+gulp.task('css:sass', function () {
+    return gulp.src(config.dev.src.dir + config.dev.src.scss)
+        .pipe(sass())
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.css))
+});
+//
+//
+// HTML BUILD
+//
+//
+gulp.task('html:build', function() {
+    return gulp.src(config.dev.src.dir + config.dev.src.html)
+        .pipe(fileinclude())
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.html));
+});
+//
+//
+// JAVASCRIPT BUILD
+//
+//
+gulp.task('js', function () {
+   return gulp.src(config.dev.src.dir + config.dev.src.js)
+       .pipe(gulp.dest(config.dev.build.dir + config.dev.build.js))
+});
+//
+//
+// IMAGE BUILD
+//
+//
+gulp.task('image:all', function () {
+    return gulp.src(config.dev.src.dir + config.dev.src.images)
+    .pipe(changed(config.dev.src.dir + config.dev.src.images))
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.images))
+});
 
-var gulp = require('gulp');
-var git = require('gulp-git');
-var phonegapBuild = require('gulp-phonegap-build');
+gulp.task('image:res', function () {
+    return gulp.src(config.dev.src.dir + config.dev.src.res)
+        .pipe(changed(config.dev.src.dir + config.dev.src.res))
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.res))
+});
 
-
-// {dot: true} here to inlude .pgbomit file in zip
-gulp.task('phonegap-build', function () {
+gulp.task('images', gulp.parallel('image:all','image:res'));
+//
+//
+// PHONEGAP BUILD
+//
+//
+gulp.task('phonegap:deploy', function () {
     gulp.src('dist/**/*', {dot: true})
         .pipe(phonegapBuild({
-            'isRepository': Task_Config.phonegap_build.option.isRepository,
-            'appId': Task_Config.phonegap_build.option.appId,
+            'isRepository': config.phonegap_build.option.isRepository,
+            'appId': config.phonegap_build.option.appId,
             'user': {
-                'email': Task_Config.phonegap_build.option.user.email,
-                'password': Task_Config.phonegap_build.option.user.password
+                'email': config.phonegap_build.option.user.email,
+                'password': config.phonegap_build.option.user.password
             },
-            'platforms': Task_Config.phonegap_build.option.platforms,
+            'platforms': config.phonegap_build.option.platforms,
             'download': {
-                'android': Task_Config.phonegap_build.option.download.android
+                'android': config.phonegap_build.option.download.android
             },
-            'hydrates': false,
-            'private': Task_Config.phonegap_build.option.private,
-            'title': Task_Config.phonegap_build.option.title
+            'hydrates': config.phonegap_build.option.hydrates,
+            'private': config.phonegap_build.option.private,
+            'title': config.phonegap_build.option.title
         }));
 });
 
-gulp.task('git:add', function() {
-    return gulp.src(['build/*','dist/**/*.**','.gitignore','gulpfile.js','package.json'])
+gulp.task('phonegap:dev', function () {
+    return gulp.src('dist/**/*', {dot: true})
+        .pipe(phonegapBuild({
+            'isRepository': config.phonegap_build.option.isRepository,
+            'appId': config.phonegap_build.option.appId,
+            'user': {
+                'email': config.phonegap_build.option.user.email,
+                'password': config.phonegap_build.option.user.password
+            },
+            'platforms': config.phonegap_build.option.platforms,
+            'download': {
+                'android': config.phonegap_build.option.download.android
+            },
+            'hydrates': config.phonegap_build.option.hydrates,
+            'private': config.phonegap_build.option.private,
+            'title': config.phonegap_build.option.title
+        }));
+});
+//
+//
+// XML
+//
+//
+gulp.task('xml', function () {
+    return gulp.src(config.dev.src.dir + config.dev.src.phonegapXML)
+        .pipe(changed(config.dev.src.dir + config.dev.src.phonegapXML))
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.phonegapXML))
+});
+//
+//
+// SPALSH SCREEN
+//
+//
+gulp.task('splashScreen', function () {
+    return gulp.src(config.dev.src.dir + config.dev.src.splashScreen)
+        .pipe(changed(config.dev.src.dir + config.dev.src.splashScreen))
+        .pipe(gulp.dest(config.dev.build.dir + config.dev.build.splashScreen))
+});
+//
+//
+// GIT DEPLOY
+//
+//
+gulp.task('git:add', function () {
+    return gulp.src(['build/*', 'dist/**/*.**', '.gitignore', 'gulpfile.js', 'package.json'])
         .pipe(git.add())
         .pipe(git.commit('initial commit'));
 
 });
-gulp.task('git:commit', function(){
+gulp.task('git:commit', function () {
     return gulp.src('./git-test/*')
 });
-gulp.task('git:push', function(callback){
+gulp.task('git:push', function (callback) {
     git.push('origin', 'master', function (err) {
         if (err) throw err;
     });
 
     return callback();
 });
-gulp.task('phonegap-build-debug', function () {
-    return gulp.src('dist/**/*', {dot: true})
-        .pipe(phonegapBuild({
-            'isRepository': Task_Config.phonegap_build.option.isRepository,
-            'appId': Task_Config.phonegap_build.option.appId,
-            'user': {
-                'email': Task_Config.phonegap_build.option.user.email,
-                'password': Task_Config.phonegap_build.option.user.password
-            },
-            'platforms': Task_Config.phonegap_build.option.platforms,
-            'download': {
-                'android': Task_Config.phonegap_build.option.download.android
-            },
-            'hydrates': Task_Config.phonegap_build.option.hydrates,
-            'private': Task_Config.phonegap_build.option.private,
-            'title': Task_Config.phonegap_build.option.title
-        }));
+gulp.task('git', gulp.series('git:add', 'git:commit', 'git:push'));
+
+
+
+
+
+gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'css:sass','js','html:build') );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+gulp.task('ifelse', function () {
+    return gulp.src('dist/**/*')
+        .pipe(ifElse(process.env.NODE_ENV === 'dep', function dep() {
+            console.log("DEPLOY");
+            return
+        }, function dep() {
+            console.log("DEV");
+            return
+        }))
 });
 
-gulp.task('git', gulp.series('git:add','git:commit','git:push'));
+gulp.task('my', function () {
+    console.log(process.argv[3]);
+});
 
-gulp.task('default', gulp.series('git','phonegap-build-debug'));
