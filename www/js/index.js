@@ -1,12 +1,14 @@
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
-
+alert("Я работаю!");
 
 
 function onDeviceReady() {
     console.log("Hello");
-    $("plugin").text(JSON.stringify(cordova.plugins.locationAccuracy));
+    alert("Я работаю!");
+    var element = document.getElementById('plugin');
+    element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
     alert.log("init");
     cordova.plugins.locationAccuracy.request(function (success) {
         alert.log(success, "success");
