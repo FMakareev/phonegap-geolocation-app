@@ -28,9 +28,8 @@
 <meta name="viewport"
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
 <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *"/>
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+
+
 <link rel="stylesheet" type="text/css" href="css/index.css" />
 <title>Hello World</title>
 
@@ -51,27 +50,15 @@
 </head>
 
 <body>
+<h1>hello world</h1>
+<div id="plugin"></div>
 
 
-<h2>cordova-plugin-request-location-accuracy demo</h2>
 
-<p>Current Location Mode: <span id="location-mode"></span></p>
-
-<div><button id="location-settings">Open Location settings</button></div>
-
-<div><button id="request-authorization">Request Location Authorization</button></div>
-
-<div>
-    <select id="location-accuracy">
-        <option value="3">High Accuracy</option>
-        <option value="2">Balanced Power</option>
-        <option value="1">Lower Power</option>
-        <option value="0">No Power</option>
-    </select>
-    <button id="request-accuracy">Request Location Accuracy</button>
-</div>
-
-
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="http://debug3.build.phonegap.com/target/target-script-min.js#46b53f8e-7889-11e7-9e90-06dba65d575a"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 
 </html>

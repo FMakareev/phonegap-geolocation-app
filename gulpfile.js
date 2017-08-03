@@ -140,13 +140,13 @@ gulp.task('git:push', function (callback) {
 gulp.task('git', gulp.series('git:add', 'git:commit', 'git:push'));
 
 
-
-
-
-gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'css:sass','js','html:build') );
-
-
 gulp.task('build:app', gulp.series('git','phonegap:dev'));
+
+
+gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'css:sass','js','html:build', 'build:app') );
+
+
+
 
 
 
