@@ -60,7 +60,7 @@ gulp.task('images', gulp.parallel('image:all','image:res'));
 //
 //
 gulp.task('phonegap:deploy', function () {
-    gulp.src('dist/**/*', {dot: true})
+    gulp.src('www/**/*', {dot: true})
         .pipe(phonegapBuild({
             'isRepository': config.phonegap_build.option.isRepository,
             'appId': config.phonegap_build.option.appId,
@@ -79,7 +79,7 @@ gulp.task('phonegap:deploy', function () {
 });
 
 gulp.task('phonegap:dev', function () {
-    return gulp.src('dist/**/*', {dot: true})
+    return gulp.src('./www/**/*', {dot: true})
         .pipe(phonegapBuild({
             'isRepository': config.phonegap_build.option.isRepository,
             'appId': config.phonegap_build.option.appId,
@@ -122,7 +122,7 @@ gulp.task('splashScreen', function () {
 //
 //
 gulp.task('git:add', function () {
-    return gulp.src(['build/*', 'dist/**/*.**', '.gitignore', 'gulpfile.js', 'package.json'])
+    return gulp.src(['build/*', 'www/**/*.**', '.gitignore', 'gulpfile.js', 'package.json'])
         .pipe(git.add())
         .pipe(git.commit('initial commit'));
 
@@ -164,7 +164,7 @@ gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'c
 
 //
 gulp.task('ifelse', function () {
-    return gulp.src('dist/**/*')
+    return gulp.src('www/**/*')
         .pipe(ifElse(process.env.NODE_ENV === 'dep', function dep() {
             console.log("DEPLOY");
             return
