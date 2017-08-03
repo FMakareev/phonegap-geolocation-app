@@ -2,7 +2,7 @@
   "phonegap_build": {
     "option": {
       "isRepository": "true",
-      "appId": "2705308",
+      "appId": "2739713",
       "user": {
         "email": "fmakareev@gmail.com",
         "password": "19980911Fender"
@@ -39,7 +39,7 @@
       "splashScreen" : "/splash.png"
     },
     "build": {
-      "dir": "./dist",
+      "dir": "./www",
       "css": "/css/",
       "image": "/image/",
       "html": "/",

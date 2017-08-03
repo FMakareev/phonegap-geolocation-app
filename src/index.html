@@ -1,36 +1,61 @@
-<!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
 
 <head>
-@@include('./template/_head.html')
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *"/>
+
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hello World</title>
+
 </head>
 
 <body>
-@@include('./template/_header.html')
+<h1>hello world</h1>
+<div id="plugin">тут по идеи должен быть код плагина</div>
+<div id="geolocation">А тут геолокация</div>
+<h2>locationAccuracy</h2>
+<div id="locationAccuracy-success">locationAccuracy-success</div>
+<div id="locationAccuracy_error">locationAccuracy_error</div>
+<div id="locationAccuracy_accuracy">locationAccuracy_accuracy</div>
+<div id="canRequest">canRequest</div>
+<button onclick="document.location.reload()">reload page</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_ALREADY_REQUESTING))">ERROR_ALREADY_REQUESTING</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_INVALID_ACTION))">ERROR_INVALID_ACTION</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_INVALID_ACCURACY))">ERROR_INVALID_ACCURACY</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_EXCEPTION))">ERROR_EXCEPTION</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_CANNOT_CHANGE_ACCURACY))">ERROR_CANNOT_CHANGE_ACCURACY</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED))">ERROR_USER_DISAGREED</button>
+<br>
+<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_GOOGLE_API_CONNECTION_FAILED))">ERROR_GOOGLE_API_CONNECTION_FAILED</button>
 
+<br>
+<hr>
+<br>
+<h3>RequestConst</h3>
+<ul id="RequestConst"></ul>
+<br>
+<h3>SuccessConst</h3>
+<ul id="SuccessConst"></ul>
+<br>
+<h3>ErrorConst</h3>
+<ul id="ErrorConst"></ul>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="http://debug3.build.phonegap.com/target/target-script-min.js#46b53f8e-7889-11e7-9e90-06dba65d575a"></script>
 
+<script type="text/javascript" src="js/index.js"></script>
 
-@@include('./template/_script.html')
 </body>
 
 </html>
