@@ -12,23 +12,23 @@ function onDeviceReady() {
     var locationAccuracy_error = document.getElementById('locationAccuracy-error');
     var locationAccuracy_accuracy = document.getElementById('locationAccuracy-accuracy');
     element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
-    alert.log("init");
+    alert("init");
     cordova.plugins.locationAccuracy.request(function (success) {
         locationAccuracy_success  = JSON.stringify(success);
-        alert.log(success, "success");
+        alert(success, "success");
     }, function (error) {
         locationAccuracy_error  = JSON.stringify(error);
-        alert.log(error, "error");
+        alert(error, "error");
     }, function (accuracy) {
         locationAccuracy_accuracy  = JSON.stringify(accuracy);
-        alert.log(accuracy, "accuracy");
+        alert(accuracy, "accuracy");
     });
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
     cordova.plugins.locationAccuracy.canRequest(function(canRequest){
-        alert.log(canRequest, "canRequest");
+        alert(canRequest, "canRequest");
     });
-    alert.log("end");
+    alert("end");
 }
 
 
