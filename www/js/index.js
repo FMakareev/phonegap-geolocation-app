@@ -8,31 +8,39 @@ function onDeviceReady() {
     console.log("Hello");
     alert("Я работаю!");
     var element = document.getElementById('plugin');
+        element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
+
     var locationAccuracy_success = document.getElementById('locationAccuracy-success');
     var locationAccuracy_error = document.getElementById('locationAccuracy-error');
     var locationAccuracy_accuracy = document.getElementById('locationAccuracy-accuracy');
-    element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
+    var canRequest = document.getElementById('canRequest');
     alert("init");
     cordova.plugins.locationAccuracy.request(function (success) {
+        alert("Функция success");
         locationAccuracy_success  = JSON.stringify(success);
-        alert(success, "success");
+        alert(JSON.stringify(success));
     }, function (error) {
+        alert("Функция error");
         locationAccuracy_error  = JSON.stringify(error);
-        alert(error, "error");
+        alert(JSON.stringify(error));
     }, function (accuracy) {
+        alert("Функция accuracy");
         locationAccuracy_accuracy  = JSON.stringify(accuracy);
-        alert(accuracy, "accuracy");
+        alert(JSON.stringify(accuracy));
     });
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
     cordova.plugins.locationAccuracy.canRequest(function(canRequest){
-        alert(canRequest, "canRequest");
+        alert("canRequest");
+        canRequest.innerHTML = JSON.stringify(canRequest);
+        alert(JSON.stringify(canRequest));
     });
     alert("end");
 }
 
 
 function onSuccess(position) {
+    alert("Функция onSuccess");
     var element = document.getElementById('geolocation');
     element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
         'Longitude: '          + position.coords.longitude             + '<br />' +
@@ -47,6 +55,7 @@ function onSuccess(position) {
 // onError Callback receives a PositionError object
 //
 function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-        'message: ' + error.message + '\n');
+    alert("Функция onError");
+    alert('code: '    + SON.stringify(error.code)    + '\n' +
+        'message: ' + SON.stringify(error.message) + '\n');
 }
