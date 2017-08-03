@@ -8,14 +8,20 @@ function onDeviceReady() {
     console.log("Hello");
     alert("Я работаю!");
     var element = document.getElementById('plugin');
+    var locationAccuracy_success = document.getElementById('locationAccuracy-success');
+    var locationAccuracy_error = document.getElementById('locationAccuracy-error');
+    var locationAccuracy_accuracy = document.getElementById('locationAccuracy-accuracy');
     element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
     alert.log("init");
     cordova.plugins.locationAccuracy.request(function (success) {
+        locationAccuracy_success  = JSON.stringify(success);
         alert.log(success, "success");
     }, function (error) {
+        locationAccuracy_error  = JSON.stringify(error);
         alert.log(error, "error");
     }, function (accuracy) {
-        alert.log(accuracy, "error");
+        locationAccuracy_accuracy  = JSON.stringify(accuracy);
+        alert.log(accuracy, "accuracy");
     });
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
