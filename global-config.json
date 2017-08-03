@@ -1,0 +1,52 @@
+{
+  "phonegap_build": {
+    "option": {
+      "isRepository": "true",
+      "appId": "2705308",
+      "user": {
+        "email": "fmakareev@gmail.com",
+        "password": "19980911Fender"
+      },
+      "platforms": [
+        "android"
+      ],
+      "download": {
+        "android": "build/android.apk"
+      },
+      "hydrates": "true",
+      "private": "false",
+      "title": "TestApp",
+      "keys": {
+        "ios": {
+          "password": ""
+        },
+        "android": {
+          "key_pw": "",
+          "keystore_pw": ""
+        }
+      }
+    }
+  },
+  "dev": {
+    "src": {
+      "dir": "./src",
+      "scss": "/scss/**/*.scss",
+      "images": "/images/**/*.**",
+      "html": "/**/[^_]*.html",
+      "res": "/res/**/*.png",
+      "js": "/js/**/*.js",
+      "phonegapXML" : "/config.xml",
+      "splashScreen" : "/splash.png"
+    },
+    "build": {
+      "dir": "./dist",
+      "css": "/css/",
+      "image": "/image/",
+      "html": "/",
+      "res": "/res/",
+      "js": "/js/",
+      "phonegapXML" : "/",
+      "splashScreen" : "/"
+    }
+  }
+}
