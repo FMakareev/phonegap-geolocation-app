@@ -143,7 +143,7 @@ gulp.task('git', gulp.series('git:add', 'git:commit', 'git:push'));
 gulp.task('build:app', gulp.series('git','phonegap:dev'));
 
 
-gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'css:sass','js','html:build', 'git') );
+gulp.task('default', gulp.series(gulp.parallel('splashScreen','xml','images'),'css:sass','js','html:build') );
 
 
 

@@ -70,46 +70,19 @@ var SuccessConst = [
 ];
 
 function onDeviceReady() {
-    console.log("Hello");
-    alert("Я работаю!");
-    var element = document.getElementById('plugin');
-    element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
-
-    var locationAccuracy_success = document.getElementById('locationAccuracy-success');
-    var locationAccuracy_error = document.getElementById('locationAccuracy-error');
-    var locationAccuracy_accuracy = document.getElementById('locationAccuracy-accuracy');
-    var canRequest = document.getElementById('canRequest');
     alert("init");
-    cordova.plugins.locationAccuracy.request(function (success) {
-        alert("Функция success");
-        locationAccuracy_success = JSON.stringify(success);
-        alert(JSON.stringify(success));
-    }, function (error) {
-        alert("Функция error");
-        locationAccuracy_error = JSON.stringify(error);
-        alert(JSON.stringify(error));
-    }, function (accuracy) {
-        alert("Функция accuracy");
-        locationAccuracy_accuracy = JSON.stringify(accuracy);
-        alert(JSON.stringify(accuracy));
-    });
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
-    cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
-        alert("canRequest");
-        canRequest.innerHTML = JSON.stringify(canRequest);
-        alert(JSON.stringify(canRequest));
-    });
+    myLocationAccuracy()
     RequestConstGenerator();
     SuccessConstGenerator();
     ErrorConstGenerator();
     alert("end");
-
 }
 
 function onSuccess(position) {
     alert("Функция onSuccess");
+    var element2 = document.getElementById('plugin');
     var element = document.getElementById('geolocation');
+    element2.innerHTML = JSON.stringify(position);
     element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
         'Longitude: ' + position.coords.longitude + '<br />' +
         'Altitude: ' + position.coords.altitude + '<br />' +
@@ -165,7 +138,8 @@ function myLocationAccuracy() {
         if(canRequest) {
             cordova.plugins.locationAccuracy.request(function(success){
                 alert("Successfully made request to invoke native Location Services dialog");
-                alert(JSON.stringify(success))
+                alert(JSON.stringify(success));
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
             }, function(error){
                 alert("Failed to invoke native Location Services dialog");
                 alert(JSON.stringify(error))
