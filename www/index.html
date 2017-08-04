@@ -24,23 +24,12 @@
 <div id="locationAccuracy_error">locationAccuracy_error</div>
 <div id="locationAccuracy_accuracy">locationAccuracy_accuracy</div>
 <div id="canRequest">canRequest</div>
+<hr>
 <button onclick="document.location.reload()">reload page</button>
 <br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_ALREADY_REQUESTING))">ERROR_ALREADY_REQUESTING</button>
+<button onclick="myLocationAccuracy()">myLocationAccuracy</button>
 <br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_INVALID_ACTION))">ERROR_INVALID_ACTION</button>
-<br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_INVALID_ACCURACY))">ERROR_INVALID_ACCURACY</button>
-<br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_EXCEPTION))">ERROR_EXCEPTION</button>
-<br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_CANNOT_CHANGE_ACCURACY))">ERROR_CANNOT_CHANGE_ACCURACY</button>
-<br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED))">ERROR_USER_DISAGREED</button>
-<br>
-<button onclick="alert(JSON.stringify(cordova.plugins.locationAccuracy.ERROR_GOOGLE_API_CONNECTION_FAILED))">ERROR_GOOGLE_API_CONNECTION_FAILED</button>
-
-<br>
+<button onclick="myIsRequesting()">myIsRequesting</button>
 <hr>
 <br>
 <h3>RequestConst</h3>
