@@ -1,35 +1,79 @@
-
 document.addEventListener("deviceready", onDeviceReady, false);
 
 alert("Я работаю!");
 
 var ErrorConst = [
-    cordova.plugins.locationAccuracy.ERROR_ALREADY_REQUESTING,
-    cordova.plugins.locationAccuracy.ERROR_INVALID_ACTION,
-    cordova.plugins.locationAccuracy.ERROR_INVALID_ACCURACY,
-    cordova.plugins.locationAccuracy.ERROR_EXCEPTION,
-    cordova.plugins.locationAccuracy.ERROR_CANNOT_CHANGE_ACCURACY,
-    cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED,
-    cordova.plugins.locationAccuracy.ERROR_GOOGLE_API_CONNECTION_FAILED
+    {
+        statusCode: -1,
+        name: "ERROR_ALREADY_REQUESTING",
+        method: cordova.plugins.locationAccuracy.ERROR_ALREADY_REQUESTING
+    }, {
+        statusCode: 0,
+        name: "ERROR_INVALID_ACTION",
+        method: cordova.plugins.locationAccuracy.ERROR_INVALID_ACTION
+    }, {
+        statusCode: 1,
+        name: "ERROR_INVALID_ACCURACY",
+        method: cordova.plugins.locationAccuracy.ERROR_INVALID_ACCURACY
+    }, {
+        statusCode: 2,
+        name: "ERROR_EXCEPTION",
+        method: cordova.plugins.locationAccuracy.ERROR_EXCEPTION
+    }, {
+        statusCode: 3,
+        name: "ERROR_CANNOT_CHANGE_ACCURACY",
+        method: cordova.plugins.locationAccuracy.ERROR_CANNOT_CHANGE_ACCURACY
+    }, {
+        statusCode: 4,
+        name: "ERROR_USER_DISAGREED",
+        method: cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED
+    }, {
+        statusCode: 5,
+        name: "ERROR_GOOGLE_API_CONNECTION_FAILED",
+        method: cordova.plugins.locationAccuracy.ERROR_GOOGLE_API_CONNECTION_FAILED
+    }
+
+
 ];
 
 var RequestConst = [
-    cordova.plugins.locationAccuracy.REQUEST_PRIORITY_NO_POWER,
-    cordova.plugins.locationAccuracy.REQUEST_PRIORITY_LOW_POWER,
-    cordova.plugins.locationAccuracy.REQUEST_PRIORITY_BALANCED_POWER_ACCURACY,
-    cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY
+    {
+        statusCode: 0,
+        name: "REQUEST_PRIORITY_NO_POWER",
+        method: cordova.plugins.locationAccuracy.REQUEST_PRIORITY_NO_POWER
+    }, {
+        statusCode: 1,
+        name: "REQUEST_PRIORITY_LOW_POWER",
+        method: cordova.plugins.locationAccuracy.REQUEST_PRIORITY_LOW_POWER
+    }, {
+        statusCode: 2,
+        name: "REQUEST_PRIORITY_BALANCED_POWER_ACCURACY",
+        method: cordova.plugins.locationAccuracy.REQUEST_PRIORITY_BALANCED_POWER_ACCURACY
+    }, {
+        statusCode: 3,
+        name: "REQUEST_PRIORITY_HIGH_ACCURACY",
+        method: cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY
+    }
 ];
 
 var SuccessConst = [
-    cordova.plugins.locationAccuracy.SUCCESS_SETTINGS_SATISFIED,
-    cordova.plugins.locationAccuracy.SUCCESS_USER_AGREED
+    {
+        statusCode: 0,
+        name: "SUCCESS_SETTINGS_SATISFIED",
+        method: cordova.plugins.locationAccuracy.SUCCESS_SETTINGS_SATISFIED
+    },{
+        statusCode: 1,
+        name: "SUCCESS_USER_AGREED",
+        method: cordova.plugins.locationAccuracy.SUCCESS_USER_AGREED
+    }
+
 ];
 
 function onDeviceReady() {
     console.log("Hello");
     alert("Я работаю!");
     var element = document.getElementById('plugin');
-        element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
+    element.innerHTML = JSON.stringify(cordova.plugins.locationAccuracy);
 
     var locationAccuracy_success = document.getElementById('locationAccuracy-success');
     var locationAccuracy_error = document.getElementById('locationAccuracy-error');
@@ -38,20 +82,20 @@ function onDeviceReady() {
     alert("init");
     cordova.plugins.locationAccuracy.request(function (success) {
         alert("Функция success");
-        locationAccuracy_success  = JSON.stringify(success);
+        locationAccuracy_success = JSON.stringify(success);
         alert(JSON.stringify(success));
     }, function (error) {
         alert("Функция error");
-        locationAccuracy_error  = JSON.stringify(error);
+        locationAccuracy_error = JSON.stringify(error);
         alert(JSON.stringify(error));
     }, function (accuracy) {
         alert("Функция accuracy");
-        locationAccuracy_accuracy  = JSON.stringify(accuracy);
+        locationAccuracy_accuracy = JSON.stringify(accuracy);
         alert(JSON.stringify(accuracy));
     });
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+    cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
         alert("canRequest");
         canRequest.innerHTML = JSON.stringify(canRequest);
         alert(JSON.stringify(canRequest));
@@ -63,56 +107,84 @@ function onDeviceReady() {
 
 }
 
-
 function onSuccess(position) {
     alert("Функция onSuccess");
     var element = document.getElementById('geolocation');
-    element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
-        'Longitude: '          + position.coords.longitude             + '<br />' +
-        'Altitude: '           + position.coords.altitude              + '<br />' +
-        'Accuracy: '           + position.coords.accuracy              + '<br />' +
-        'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-        'Heading: '            + position.coords.heading               + '<br />' +
-        'Speed: '              + position.coords.speed                 + '<br />' +
-        'Timestamp: '          + position.timestamp                    + '<br />';
+    element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
+        'Longitude: ' + position.coords.longitude + '<br />' +
+        'Altitude: ' + position.coords.altitude + '<br />' +
+        'Accuracy: ' + position.coords.accuracy + '<br />' +
+        'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+        'Heading: ' + position.coords.heading + '<br />' +
+        'Speed: ' + position.coords.speed + '<br />' +
+        'Timestamp: ' + position.timestamp + '<br />';
 }
 
-// onError Callback receives a PositionError object
-//
 function onError(error) {
     alert("Функция onError");
-    alert('code: '    + SON.stringify(error.code)    + '\n' +
+    alert('code: ' + SON.stringify(error.code) + '\n' +
         'message: ' + SON.stringify(error.message) + '\n');
 }
 
-
-
 function RequestConstGenerator() {
     var wrap = document.getElementById('RequestConst');
-    for(var i = 0; i < RequestConst.length; i++) {
-        var a = RequestConst[i];
+    for (var i = 0; i < RequestConst.length; i++) {
+        var a = RequestConst[i].method;
         var li = document.createElement('li');
-        li.innerHTML = JSON.stringify(a);
+        li.innerHTML = RequestConst[i].name + " - "+ JSON.stringify(a);
         wrap.appendChild(li);
     }
 }
 
 function SuccessConstGenerator() {
     var wrap = document.getElementById('SuccessConst');
-    for(var i = 0; i < SuccessConst.length; i++) {
-        var a = SuccessConst[i];
+    for (var i = 0; i < SuccessConst.length; i++) {
+        var a = SuccessConst[i].method;
         var li = document.createElement('li');
-        li.innerHTML = JSON.stringify(a);
+        li.innerHTML = SuccessConst[i].name + " - "+ JSON.stringify(a);
         wrap.appendChild(li);
     }
 }
 
 function ErrorConstGenerator() {
     var wrap = document.getElementById('ErrorConst');
-    for(var i = 0; i < ErrorConst.length; i++) {
-        var a = ErrorConst[i];
+    for (var i = 0; i < ErrorConst.length; i++) {
+        var a = ErrorConst[i].method;
         var li = document.createElement('li');
-        li.innerHTML = JSON.stringify(a);
+        li.innerHTML = ErrorConst[i].name + " - "+ JSON.stringify(a);
         wrap.appendChild(li);
     }
 }
+
+
+
+function myLocationAccuracy() {
+    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+        alert("A request " + (canRequest ? "can" : "cannot") + " currently be made");
+        alert(JSON.stringify(canRequest));
+        if(canRequest) {
+            cordova.plugins.locationAccuracy.request(function(success){
+                alert("Successfully made request to invoke native Location Services dialog");
+                alert(JSON.stringify(success))
+            }, function(error){
+                alert("Failed to invoke native Location Services dialog");
+                alert(JSON.stringify(error))
+            },
+                cordova.plugins.locationAccuracy.REQUEST_PRIORITY_LOW_POWER
+            );
+        }
+    });
+}
+
+function myIsRequesting() {
+    cordova.plugins.locationAccuracy.isRequesting(function(requesting){
+        alert("A request " + (requesting ? "is" : "is not") + " currently in progress");
+        alert(JSON.stringify(requesting));
+    });
+}
+
+
+
+
+
+
